@@ -14,6 +14,11 @@ import NavbarWrapper from './navbarWrapper'
 // import 'firebase/auth';
 
 
+import Pastpapers from './Pastpapers';
+import Courses from './Courses';
+import Resources from './Resources';
+
+
 // Your web app's Firebase configuration
 
 
@@ -56,6 +61,10 @@ function App() {
         <Route path="/create-account" element={<Create />} />
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home/>} />
+
+        <Route path="/pastpapers" element={Pastpapers} />
+        <Route path="/courses" element={Courses} />
+        <Route path="/resources" element={Resources} />
 
          
           
