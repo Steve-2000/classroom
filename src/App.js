@@ -12,10 +12,16 @@ import Create from './Create'
 import NavbarWrapper from './navbarWrapper'
 // import firebase from 'firebase/app';
 // import 'firebase/auth';
+// import PhoneAuth from './PhoneAuth';
+
+import axios from 'axios';
+import Ent from './components/Ent';
+import Ict from './components/Ict';
+import Bst from './components/Bst';
 
 
 import Pastpapers from './Pastpapers';
-import Courses from './Courses';
+import Marks from './Marks';
 import Resources from './Resources';
 
 
@@ -23,6 +29,9 @@ import Resources from './Resources';
 
 
 function App() {
+
+
+  
   // const [currentUser, setCurrentUser] = useState(null);
   // const [loading, setLoading] = useState(true);
 
@@ -38,7 +47,7 @@ function App() {
   // if (loading) {
   //   return <div>Loading...</div>;
   // }
- 
+
   
   return (
     <div className="App">
@@ -46,6 +55,7 @@ function App() {
       <NavbarWrapper />
       </header>
       <main>
+      
         <Routes>
           {/* <Route path="/" element={<Login />} /> */}
           <Route path="/about" element={<About />} />
@@ -62,9 +72,23 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home/>} />
 
-        <Route path="/pastpapers" element={Pastpapers} />
-        <Route path="/courses" element={Courses} />
-        <Route path="/resources" element={Resources} />
+        <Route path="/pastpapers" element={<Pastpapers/>} />
+        
+        <Route path="/resources" element={<Resources/>} />
+
+
+        {/* from marks to choose dep */}
+        <Route path="/marks" >
+        <Route index element={<Marks/ >} />
+        <Route path="ent" element={<Ent/>} />
+        <Route path="bst" element={<Bst/>} />
+        <Route path="ict" element={<Ict/>} />
+        </Route>
+
+       
+
+        
+
 
          
           

@@ -1,0 +1,47 @@
+/* Flex container for Marks component */
+.marks__container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+  
+}
+
+/* Common box styles */
+.marks__box {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    margin: 18px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.5em;
+    color: white;
+    font-size: xx-large;
+    border-radius: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+/* Specific styles for each box */
+.marks__box--ent {
+    background-color: #6d6766; /* Tomato */
+    opacity: 0.8;
+}
+
+.marks__box--bst {
+    background-color: #83919e; /* SteelBlue */
+    opacity: 0.8;
+}
+
+.marks__box--ict {
+    background-color: #9fc49f; /* LimeGreen */
+    opacity: 0.8;
+}
+
+/* Hover effects */
+.marks__box:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

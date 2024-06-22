@@ -19,9 +19,9 @@ function Home() {
             <span>Pastpapers</span>
           </div>
         </div>
-        <div className="flex-item" onClick={() => handleNavigation('/courses')}>
+        <div className="flex-item" onClick={() => handleNavigation('/marks')}>
           <div className="overlay">
-            <span>Courses</span>
+            <span>marks</span>
           </div>
         </div>
         <div className="flex-item" onClick={() => handleNavigation('/resources')}>

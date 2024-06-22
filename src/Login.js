@@ -44,6 +44,7 @@ const Login = () => {
               tabIndex={0}
               name="email"
               value={email}
+
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
