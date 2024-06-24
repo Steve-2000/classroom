@@ -17,7 +17,8 @@
   .nav-links {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 0px;
+    margin-right: 20px;
   }
   
   .nav-links li {

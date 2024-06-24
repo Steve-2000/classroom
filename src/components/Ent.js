@@ -1,10 +1,11 @@
 import React from 'react'
+import Results from './Results'
 
 const Ent = () => {
 
   return (
-    <div>
-      <h1>ent cls</h1>
+    <div className="results">
+      <Results/>
     </div>
   )
 }

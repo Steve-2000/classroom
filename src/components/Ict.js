@@ -1,11 +1,10 @@
 import React from 'react'
-
+import Results from './Results'
 const Ict = () => {
 
   return (
-    <div>
-      <h1>ict cls</h1>
-      
+    <div className="results">
+      <Results/>
     </div>
   )
 }

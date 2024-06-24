@@ -17,7 +17,8 @@ function Navbar2() {
         <li><Link to="/about">About</Link></li>
         <li><Link to="/portfolio">Portfolio</Link></li>
         <li><Link to="/blog">Blog</Link></li>
-        <li><Link to="/contact">Contact...</Link></li>
+        <li><Link to="/contact">Contact   </Link></li>
+        <li><Link to="/admin">Admin</Link></li>
       </ul>
     </nav>
   );

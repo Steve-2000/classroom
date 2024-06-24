@@ -18,11 +18,13 @@ import axios from 'axios';
 import Ent from './components/Ent';
 import Ict from './components/Ict';
 import Bst from './components/Bst';
+import Admin from './components/Admin';
 
 
 import Pastpapers from './Pastpapers';
 import Marks from './Marks';
 import Resources from './Resources';
+// import Admin from './components/Admin';
 
 
 // Your web app's Firebase configuration
@@ -71,6 +73,7 @@ function App() {
         <Route path="/create-account" element={<Create />} />
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home/>} />
+        <Route path='/admin'element={<Admin/>} />
 
         <Route path="/pastpapers" element={<Pastpapers/>} />
         
@@ -84,6 +87,7 @@ function App() {
         <Route path="bst" element={<Bst/>} />
         <Route path="ict" element={<Ict/>} />
         </Route>
+        
 
        
 

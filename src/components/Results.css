@@ -7,15 +7,19 @@
 
 .results-form {
     margin-bottom: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .results-form label {
     margin-right: 10px;
+
+    
 }
 
 .results-form input {
     padding: 5px;
     margin-right: 10px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .results-form button {

@@ -5,6 +5,7 @@ const Results = () => {
     const [index, setIndex] = useState("");
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
+    
 
     const handleResults = async (e) => {
         e.preventDefault();
@@ -30,6 +31,7 @@ const Results = () => {
                 <input 
                     type="text"
                     placeholder="index number"
+                
                     value={index}
                     onChange={(e) => setIndex(e.target.value)}
                     id="index"
@@ -57,7 +59,7 @@ const Results = () => {
                                     <td>{result.subject}</td>
                                     <td>{result.department}</td>
                                     <td>{result.marks}</td>
-                                    <td>{result.status}</td>
+                                    <td>{(result.marks)>50 ? result.status="done":"fsil"}</td>
                                 </tr>
                             ))}
                         </tbody>
