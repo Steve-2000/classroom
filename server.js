@@ -61,6 +61,17 @@ app.get('/api/results/:index', async (req, res) => {
     }
 });
 
+// Save multiple student results
+app.post('/api/admin/saveResults', async (req, res) => {
+    const students = req.body;
+    try {
+        await Result.insertMany(students);
+        res.status(200).send('Data saved successfully');
+    } catch (error) {
+        console.error('Error saving data:', error);
+        res.status(500).send('Failed to save data');
+    }
+});
 
 
 const port = 5000;
