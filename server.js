@@ -19,7 +19,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Student schema
 const resultSchema = new mongoose.Schema({
-    indexNo: String,
+    indexNo: String,    
     subject: String,
     department: String,
     marks: Number,
@@ -72,6 +72,46 @@ app.post('/api/admin/saveResults', async (req, res) => {
         res.status(500).send('Failed to save data');
     }
 });
+
+
+app.use(express.json());
+
+
+
+const noteSchema = new mongoose.Schema({
+    userId: String,
+    email: String,
+    content: String,
+    createdAt: { type: Date, default: Date.now },
+});
+
+const Note = mongoose.model('Note', noteSchema);
+
+app.post('/notes', async (req, res) => {
+    const { userId, email, content } = req.body;
+    const newNote = new Note({
+        userId,
+        email,
+        content,
+    });
+    await newNote.save();
+    res.json(newNote);
+});
+
+app.get('/notes/:email', async (req, res) => {
+    const notes = await Note.find({ email: req.params.email });
+    res.json(notes);
+});
+
+app.delete('/notes/:id', async (req, res) => {
+    await Note.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Note deleted' });
+});
+
+
+
+
+
 
 
 const port = 5000;
