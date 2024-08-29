@@ -12,22 +12,28 @@
     width: 200px;
     height: 200px;
     display: flex;
+
     margin: 18px;
     justify-content: center;
     align-items: center;
     text-align: center;
     font-size: 1.5em;
-    color: white;
+    color: rgb(255, 255, 255);
     font-size: xx-large;
     border-radius: 20px;
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
 }
+.marks__box>span{
+    text-decoration: overline;
+    background-color: black;
+    font-size:30px ;
+}
 
 /* Specific styles for each box */
 .marks__box--ent {
     background-color: #6d6766; /* Tomato */
-    opacity: 0.6;
+    opacity: 0.9;
     background-image:url("components/photos/pexels-thisisengineering-3862634.jpg");
     background-size: cover;
    
@@ -38,12 +44,12 @@
     background-image:url("components/photos/pexels-zen-chung-5529006.jpg");
     background-size: cover;
     
-    opacity: 0.6;
+    opacity: 0.9;
 }
 
 .marks__box--ict {
     background-color: #9fc49f; /* LimeGreen */
-    opacity: 0.6;
+    opacity: 0.9;
     background-image:url("components/photos/pexels-markus-winkler-1430818-3639873.jpg");
     background-size: cover;
     

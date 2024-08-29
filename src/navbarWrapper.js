@@ -7,7 +7,6 @@ const NavbarWrapper = () => {
     const location = useLocation();
   
     if (location.pathname === '/login' || location.pathname === '/create-account '|| location.pathname === '/') {
-      return <NavBar />;
     }
     return <Navbar2 />;
   };

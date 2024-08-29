@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import './Results.css'; // Import the CSS file
+import Bst from './Bst';
+import Ent from './Ent';
+import Ict from './Ict';
+import { useParams } from 'react-router-dom';
 
 const Results = () => {
-    const [index, setIndex] = useState("");
+    const {id}=useParams();
+    const [index, setIndex] = useState(id);
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
+
+    const id1="ent"
+    const id2="bst"
+    const id3="ict"
+  
     
 
     const handleResults = async (e) => {
@@ -23,6 +33,10 @@ const Results = () => {
             setError(error.message);
         }
     };
+ 
+     
+
+    
 
     return (
         <div className="results-container">
@@ -59,14 +73,16 @@ const Results = () => {
                                     <td>{result.subject}</td>
                                     <td>{result.department}</td>
                                     <td>{result.marks}</td>
-                                    <td>{(result.marks)>50 ? result.status="done":"fsil"}</td>
+                                    <td>{(result.marks)>50 ? result.status="done":"Fail"}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
             )}
+            
         </div>
+
     );
 };
 

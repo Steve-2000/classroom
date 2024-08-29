@@ -7,9 +7,12 @@ import About from './About';
 import Portfolio from './Portfolio';
 import Blog from './Blog';
 import Contact from './Contact';
+import { signOut } from 'firebase/auth';
 import Login from './Login';
 import Create from './Create'
 import NavbarWrapper from './navbarWrapper'
+import Notes from './Notes';
+import LogoutButton from './LogoutButton';
 // import firebase from 'firebase/app';
 // import 'firebase/auth';
 // import PhoneAuth from './PhoneAuth';
@@ -19,18 +22,25 @@ import Ent from './components/Ent';
 import Ict from './components/Ict';
 import Bst from './components/Bst';
 import Admin from './components/Admin';
+import { useNavigate } from 'react-router-dom';
+
+
 
 
 import Pastpapers from './Pastpapers';
 import Marks from './Marks';
 import Resources from './Resources';
+import Logoutbutton from './LogoutButton';
 // import Admin from './components/Admin';
 
 
 // Your web app's Firebase configuration
-
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 function App() {
+  let id1="ent"
+const[id2,setId2]=useState(["ent","bst","ict"])
+  let id3="ict"
 
 
   
@@ -50,8 +60,35 @@ function App() {
   //   return <div>Loading...</div>;
   // }
 
-  
+  const navigate = useNavigate();
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate('/login'); // Redirect to login if not authenticated
+      }
+    });
+
+    return () => unsubscribe();
+  }, [auth, navigate]);
+
+
+
+
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log('User signed out successfully');
+        navigate('/login'); // Redirect to login page after logout
+      })
+      .catch((error) => {
+        console.error('Error signing out:', error);
+      });
+  };
   return (
+
     <div className="App">
       <header>
       <NavbarWrapper />
@@ -74,18 +111,20 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home/>} />
         <Route path='/admin'element={<Admin/>} />
+        <Route path="/about" element={<About />} />
 
         <Route path="/pastpapers" element={<Pastpapers/>} />
         
-        <Route path="/resources" element={<Resources/>} />
+        <Route path="/resources" element={<Notes/>} />
+        <Route path="/logout" element={<LogoutButton/>} />
 
 
         {/* from marks to choose dep */}
         <Route path="/marks" >
-        <Route index element={<Marks/ >} />
-        <Route path="ent" element={<Ent/>} />
-        <Route path="bst" element={<Bst/>} />
-        <Route path="ict" element={<Ict/>} />
+        <Route index element={<Marks   />} /> 
+        <Route path=":id" element={<Ent  />} />
+        <Route path=":id" element={<Bst   />} />
+        <Route path=":id" element={<Ict/>} />
         </Route>
         
 
@@ -98,6 +137,10 @@ function App() {
           
         </Routes>
       </main>
+      <div><LogoutButton handleLogout={handleLogout}/>
+      <Navbar2 handleLogout={handleLogout}/>
+      
+      </div>
     </div>
   );
 }

@@ -9,10 +9,7 @@
     color: rgb(153, 42, 42);
   }
   
-  .logo {
-    font-size: 1.5em;
-    font-weight: bold;
-  }
+ 
   
   .nav-links {
     list-style: none;
@@ -36,4 +33,13 @@
     background-color: #555;
     border-radius: 5px;
   }
-  
+  .logo{
+    background-image:url("components/photos/logo.jpg");
+    width: 70px;
+    height: 70px;
+    background-size: cover;
+    background-position: center;
+    opacity: 1;
+    background-repeat: no-repeat;
+
+  }

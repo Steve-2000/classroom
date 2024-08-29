@@ -1,14 +1,80 @@
 .admin-container {
-    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    position: static; /* Ensure proper positioning context */
+    margin-top: 100px;
+}
+
+.row-control-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative; /* Make sure it flows naturally */
+    z-index: 20; /* Ensure it's above other content but below the nav */
+    background-color: white; /* Ensure visibility */
+    border-bottom: 1px solid #ddd; /* Optional border for separation */
+    top: 20px; /* Adjust this if necessary */
+}
+
+.navbar {
+    /* Add your navbar styles here */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    z-index: 20; /* Ensure the nav bar is above the row control container */
+}
+
+.row-control-container label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.row-count-input {
+    width: 80px;
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.add-row-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-row-button:hover {
+    background-color: #45a049;
 }
 
 .admin-form {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 100px;
-    margin: 100px;
-    margin-top: 100px;
+    width: 100%;
+    margin-bottom: 60px; /* Space for the save button */
+    margin-top: 60px; /* Space for the nav bar */
+}
+
+.table-container {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .admin-table {
@@ -16,32 +82,50 @@
     border-collapse: collapse;
 }
 
-.admin-table th,
-.admin-table td {
+.admin-table th, .admin-table td {
     border: 1px solid #ddd;
     padding: 8px;
+    box-sizing: border-box;
     text-align: left;
 }
 
-.admin-table th {
-    background-color: #f2f2f2;
-}
-
-.admin-table input {
+.student-input {
     width: 100%;
     padding: 5px;
-    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }
 
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #4CAF50;
+.remove-row-button {
+    background-color: #f44336;
     color: white;
     border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #45a049;
+.remove-row-button:hover {
+    background-color: #e53935;
+}
+
+.save-button {
+    margin-top: 20px; /* Space from the table */
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: fit-content;
+    text-align: center;
+}
+
+.save-button:hover {
+    background-color: #1976D2;
+}
+
+.message, .error {
+    margin-top: 10px;
+    font-weight: bold;
 }
