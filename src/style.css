@@ -1,0 +1,97 @@
+/* styles.css */
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for both Upload and Preview pages */
+.upload-container, .preview-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* Heading */
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Message styles */
+.message {
+    color: #ff0000;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+/* Upload form styles */
+.upload-form {
+    margin-bottom: 20px;
+}
+
+.upload-form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.upload-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.upload-btn:hover {
+    background-color: #0056b3;
+}
+
+/* File list styles for preview page */
+.file-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.file-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s;
+}
+
+.file-item:hover {
+    background-color: #e6f7ff;
+}
+
+.file-link {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.file-link:hover {
+    color: #0056b3;
+}

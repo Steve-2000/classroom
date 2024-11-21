@@ -16,7 +16,7 @@ function Home() {
       <div className="flex-container">
         <div className="flex-item" onClick={() => handleNavigation('/pastpapers')}>
           <div className="overlay">
-            <span>Pastpapers</span>
+            <span>updates</span>
           </div>
         </div>
         <div className="flex-item" onClick={() => handleNavigation('/marks')}>
@@ -26,7 +26,7 @@ function Home() {
         </div>
         <div className="flex-item" onClick={() => handleNavigation('/resources')}>
           <div className="overlay">
-            <span>Resources</span>
+            <span>my notes</span>
           </div>
         </div>
       </div>

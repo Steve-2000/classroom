@@ -1,235 +1,242 @@
 import React, { useState, useEffect } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import './Admins.css'; // Import the CSS file
+import axios from 'axios';
 
-const allowedEmails = ['dilan@gmail.com']; // Replace with the allowed admin emails
+const AdminPage = () => {
+    const [year, setYear] = useState('');
+    const [semester, setSemester] = useState('');
+    const [department, setDepartment] = useState('');
+    const [subjects, setSubjects] = useState([]);
+    const [error, setError] = useState('');
 
-const departments = ['ICT', 'BST', 'ENT']; // Example departments
-const subjects = ['Math', 'Science', 'English']; // Example subjects
-
-const Admin = () => {
-    const [user, setUser] = useState(null);
-    const [students, setStudents] = useState([{ indexNo: '', subject: '', department: '', marks: '', status: '' }]);
-    const [rowCount, setRowCount] = useState(1);
-    const [message, setMessage] = useState(null);
-    const [error, setError] = useState(null);
-    const [defaultDepartment, setDefaultDepartment] = useState('');
-    const [defaultSubject, setDefaultSubject] = useState('');
+    const [numRows, setNumRows] = useState(1);
+    const [studentsData, setStudentsData] = useState([
+        { indexNo: '', selectedSubject: '', marks: '', status: '' },
+    ]);
 
     useEffect(() => {
-        const auth = getAuth();
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            if (currentUser) {
-                if (allowedEmails.includes(currentUser.email)) {
-                    setUser(currentUser);
-                } else {
-                    alert('You are not authorized to access this section.');
-                    window.location.href = '/'; // Redirect to home or login page
-                }
-            } else {
-                window.location.href = '/login'; // Redirect to login if not authenticated
+        if (year && semester && department) {
+            fetchSubjects();
+        }
+    }, [year, semester, department]);
+
+    const fetchSubjects = async () => {
+        setError('');
+        try {
+            const response = await axios.get('http://localhost:5000/api/admin/getSubjects', {
+                params: { year, semester, department },
+            });
+            setSubjects(response.data);
+        } catch (error) {
+            setError('No subjects found for the selected filters.');
+            setSubjects([]);
+        }
+    };
+
+    const generateIndexNumber = (prefix, index) => {
+        return `${prefix}${index.toString().padStart(3, '0')}`;
+    };
+
+    const handleDepartmentChange = (e) => {
+        const selectedDepartment = e.target.value;
+        setDepartment(selectedDepartment);
+
+        if (selectedDepartment) {
+            const prefix = selectedDepartment.toLowerCase(); // Use the department as prefix
+            setStudentsData([{ indexNo: generateIndexNumber(prefix, 0), selectedSubject: '', marks: '', status: '' }]);
+            setNumRows(1);
+        }
+    };
+
+    const handleAddRows = (e) => {
+        const rows = parseInt(e.target.value, 10);
+        setNumRows(rows);
+
+        const newStudentsData = [...studentsData];
+        let lastIndex = studentsData[studentsData.length - 1]?.indexNo || ''; // Get last index or empty if none
+        const prefix = department.toLowerCase(); // Department as prefix
+
+        for (let i = studentsData.length; i < rows; i++) {
+            if (lastIndex) {
+                const lastNumberPart = parseInt(lastIndex.slice(-3), 10); // Extract last number
+                lastIndex = generateIndexNumber(prefix, lastNumberPart + 1);
             }
-        });
+            newStudentsData.push({
+                indexNo: lastIndex,
+                selectedSubject: '',
+                marks: '',
+                status: '',
+            });
+        }
 
-        return () => unsubscribe();
-    }, []);
+        setStudentsData(newStudentsData);
+    };
 
-    const handleInputChange = (index, field, value) => {
-        const updatedStudents = [...students];
-        updatedStudents[index] = { ...updatedStudents[index], [field]: value };
+    const handleRowChange = (index, field, value) => {
+        const updatedData = [...studentsData];
+        updatedData[index][field] = value;
 
-        // Update status based on marks
+        if (field === 'indexNo' && index === 0 && studentsData.length > 1) {
+            // Auto-increment subsequent rows when the first index is updated
+            let currentIndex = value;
+            const prefix = department.toLowerCase();
+            for (let i = 1; i < studentsData.length; i++) {
+                currentIndex = generateIndexNumber(prefix, parseInt(currentIndex.slice(-3), 10) + 1);
+                updatedData[i].indexNo = currentIndex;
+            }
+        }
+
         if (field === 'marks') {
-            updatedStudents[index].status = value > 50 ? 'Pass' : 'Fail';
+            updatedData[index].status = value > 50 ? 'Pass' : 'Fail';
         }
 
-        setStudents(updatedStudents);
-
-        // Update default values if first row is edited
-        if (index === 0) {
-            if (field === 'department') {
-                setDefaultDepartment(value);
-            } else if (field === 'subject') {
-                setDefaultSubject(value);
-            }
-        }
+        setStudentsData(updatedData);
     };
 
-    const handleAddRow = () => {
-        const lastIndex = students.length - 1;
-        const newIndexNo = students[lastIndex]?.indexNo
-            ? incrementIndex(students[lastIndex].indexNo)
-            : '';
-
-        setStudents([
-            ...students,
-            { indexNo: newIndexNo, subject: defaultSubject, department: defaultDepartment, marks: '', status: '' },
-        ]);
+    const handleDeleteRow = (index) => {
+        const updatedData = studentsData.filter((_, i) => i !== index);
+        setStudentsData(updatedData);
+        setNumRows(updatedData.length);
     };
 
-    const incrementIndex = (index) => {
-        const prefix = index.slice(0, 3);
-        const number = parseInt(index.slice(3), 10) + 1;
-        return `${prefix}${String(number).padStart(3, '0')}`;
-    };
-
-    const handleRemoveRow = (index) => {
-        const updatedStudents = students.filter((_, i) => i !== index);
-        setStudents(updatedStudents);
-    };
-
-    const handleRowCountChange = (e) => {
-        const count = parseInt(e.target.value, 10);
-        if (count > students.length) {
-            setStudents([
-                ...students,
-                ...Array(count - students.length).fill({
-                    indexNo: '',
-                    subject: defaultSubject,
-                    department: defaultDepartment,
-                    marks: '',
-                    status: '',
-                }),
-            ]);
-        } else {
-            setStudents(students.slice(0, count));
-        }
-        setRowCount(count);
-    };
-
-    const handleSave = async (e) => {
+    const handleResultSubmission = async (e) => {
         e.preventDefault();
-        setMessage(null);
-        setError(null);
+        const invalidRow = studentsData.find(
+            (data) =>
+                !data.indexNo || !data.selectedSubject || !data.marks || !data.status
+        );
 
-        // Ensure that all fields are properly set and validated
-        const validatedStudents = students.map(student => ({
-            ...student,
-            status: student.marks > 50 ? 'Pass' : 'Fail'
-        }));
+        if (invalidRow) {
+            alert('Please fill in all fields for every row');
+            return;
+        }
 
         try {
-            const response = await fetch('http://localhost:5000/api/admin/saveResults', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(validatedStudents),
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to save data');
-            }
-
-            setMessage('Data saved successfully');
+            await axios.post('http://localhost:5000/api/admin/saveResults', studentsData);
+            alert('Results updated successfully');
+            setStudentsData([{ indexNo: '', selectedSubject: '', marks: '', status: '' }]);
+            setNumRows(1);
         } catch (error) {
-            setError(error.message);
+            console.error('Error saving result:', error);
+            alert('Failed to update results');
         }
     };
 
-    if (!user) {
-        return <p>Loading...</p>; // Show a loading message or spinner
-    }
-
     return (
-        <div className="admin-container">
-            <div className="row-control-container">
-                <label htmlFor="rowCount">Number of Rows:</label>
+        <div>
+            <h2>Admin Page - Manage Results</h2>
+
+            <div>
+                <h3>Filter Subjects</h3>
+                <label>Year:</label>
+                <select value={year} onChange={(e) => setYear(e.target.value)}>
+                    <option value="">Select Year</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+
+                <label>Semester:</label>
+                <select value={semester} onChange={(e) => setSemester(e.target.value)}>
+                    <option value="">Select Semester</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+
+                <label>Department:</label>
+                <select value={department} onChange={handleDepartmentChange}>
+                    <option value="">Select Department</option>
+                    <option value="ICT">ict</option>    
+                    <option value="BST">Bst</option>
+                    <option value="ENT">Ent</option>
+                </select>
+
+                <h3>Subjects:</h3>
+                {error ? (
+                    <p style={{ color: 'red' }}>{error}</p>
+                ) : (
+                    <ul>
+                        {subjects.map((subject, index) => (
+                            <li key={index}>{subject.subject}</li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+
+            <div>
+                <h3>Enter Results for Students</h3>
+                <label>Number of Rows:</label>
                 <input
                     type="number"
-                    id="rowCount"
-                    value={rowCount}
-                    onChange={handleRowCountChange}
+                    value={numRows}
                     min="1"
-                    max="100"
-                    className="row-count-input"
+                    onChange={handleAddRows}
+                    max="10"
                 />
-                <button type="button" onClick={handleAddRow} className="add-row-button">+ Add Row</button>
-            </div>
-            <form className="admin-form" onSubmit={handleSave}>
-                <div className="table-container">
-                    <table className="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Index No</th>
-                                <th>Subject</th>
-                                <th>Department</th>
-                                <th>Marks</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {students.map((student, idx) => (
-                                <tr key={idx}>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            value={student.indexNo}
-                                            onChange={(e) => handleInputChange(idx, 'indexNo', e.target.value)}
-                                            required
-                                            className="student-input"
-                                        />
-                                    </td>
-                                    <td>
-                                        <select
-                                            value={student.subject}
-                                            onChange={(e) => handleInputChange(idx, 'subject', e.target.value)}
-                                            required
-                                            className="student-input"
-                                        >
-                                            {subjects.map((subject) => (
-                                                <option key={subject} value={subject}>
-                                                    {subject}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select
-                                            value={student.department}
-                                            onChange={(e) => handleInputChange(idx, 'department', e.target.value)}
-                                            required
-                                            className="student-input"
-                                        >
-                                            {departments.map((department) => (
-                                                <option key={department} value={department}>
-                                                    {department}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="number"
-                                            value={student.marks}
-                                            onChange={(e) => handleInputChange(idx, 'marks', e.target.value)}
-                                            required
-                                            className="student-input"
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            value={student.status}
-                                            readOnly
-                                            className="student-input"
-                                        />
-                                    </td>
-                                    <td>
-                                        <button type="button" onClick={() => handleRemoveRow(idx)} className="remove-row-button">✘</button>
-                                    </td>
-                                </tr>
+
+                {studentsData.map((student, index) => (
+                    <div key={index} className="student-row">
+                        <label>Index Number:</label>
+                        <input
+                            type="text"
+                            value={student.indexNo}
+                            onChange={(e) =>
+                                handleRowChange(index, 'indexNo', e.target.value)
+                            }
+                            placeholder="Enter Index Number"
+                        />
+
+                        <label>Subject:</label>
+                        <select
+                            value={student.selectedSubject}
+                            onChange={(e) =>
+                                handleRowChange(index, 'selectedSubject', e.target.value)
+                            }
+                        >
+                            <option value="">Select Subject</option>
+                            {subjects.map((subject, idx) => (
+                                <option key={idx} value={subject.subject}>
+                                    {subject.subject}
+                                </option>
                             ))}
-                        </tbody>
-                    </table>
-                </div>
-                <button type="submit" className="save-button">Save</button>
-                {message && <p className="message">{message}</p>}
-                {error && <p className="error">{error}</p>}
-            </form>
+                        </select>
+
+                        <label>Marks:</label>
+                        <input
+                            type="number"
+                            value={student.marks}
+                            onChange={(e) => handleRowChange(index, 'marks', e.target.value)}
+                            placeholder="Enter Marks"
+                        />
+
+                        <label>Status:</label>
+                        <select
+                            value={student.status}
+                            onChange={(e) =>
+                                handleRowChange(index, 'status', e.target.value)
+                            }
+                        >
+                            <option value="">Select Status</option>
+                            <option value="Pass">Pass</option>
+                            <option value="Fail">Fail</option>
+                        </select>
+
+                        <button
+                            type="button"
+                            onClick={() => handleDeleteRow(index)}
+                            style={{ backgroundColor: 'red', color: 'white' }}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                ))}
+
+                <button type="submit" onClick={handleResultSubmission}>
+                    Submit Results
+                </button>
+            </div>
         </div>
     );
 };
 
-export default Admin;
+export default AdminPage;

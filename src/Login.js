@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate ,Link} from "react-router-dom";
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import './Auth.css'; // Import the CSS file for styling
-import Home from "./Home";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -24,7 +23,7 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(getAuth(), email, password);
-      navigate('/home');
+      navigate('/home'); // Redirect to the home page after successful login
     } catch (e) {
       setError(e.message);
     }
@@ -41,10 +40,7 @@ const Login = () => {
               type="email"
               id="email"
               placeholder="Your email address"
-              tabIndex={0}
-              name="email"
               value={email}
-
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -52,15 +48,13 @@ const Login = () => {
             <input
               type="password"
               placeholder="Your password"
-              name="password"
-              tabIndex={1}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button type="submit" className="auth-button" tabIndex={2}>Log In</button>
+          <button type="submit" className="auth-button">Log In</button>
         </form>
-        <Link to="/create-account" className="auth-link" tabIndex={3}>Don't have an account? Create Here</Link>
+        <Link to="/create-account" className="auth-link">Don't have an account? Create Here</Link>
       </div>
     </div>
   );

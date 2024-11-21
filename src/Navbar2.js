@@ -14,9 +14,9 @@ function Navbar2({handleLogout}) {
       <div className="logo"></div>
       <ul className="nav-links">
         <li><Link to="/home">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
-        <li><Link to="/portfolio">Portfolio</Link></li>
-        <li><Link to="/blog">Blog</Link></li>
+        {/* <li><Link to="/about">About</Link></li> */}
+        <li><Link to="/portfolio">materials</Link></li>
+        <li><Link to="/blog">Q& A</Link></li>
         <li><Link to="/contact">Contact   </Link></li>
         <li><Link to="/admin">Admin</Link></li>
         <li><Link to="/logout"><button onClick={handleLogout}>logout</button></Link></li>

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import './Auth.css'; // Import the CSS file for styling
@@ -9,19 +10,35 @@ const Create = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const auth = getAuth();
+
+  useEffect(() => {
+    if (auth.currentUser) {
+      // Redirect to home page if the user is already logged in
+      navigate('/home');
+    }
+  }, [auth, navigate]);
 
   const handleRegister = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 
+    // Email format validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@tec\.rjt\.ac\.lk$/;
+    if (!emailRegex.test(email)) {
+      setError('Email should be in the format: example@tec.rjt.ac.lk');
+      return;
+    }
+
+    // Password match validation
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(getAuth(), email, password);
-      console.log('User registered successfully:', userCredential.user);
-      navigate('/login');
+      await createUserWithEmailAndPassword(auth, email, password);
+      console.log('User registered successfully');
+      navigate('/login'); // Redirect to login page after successful registration
     } catch (error) {
       setError(error.message);
     }

@@ -1,131 +1,127 @@
-.admin-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    position: static; /* Ensure proper positioning context */
-    margin-top: 100px;
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
 }
 
-.row-control-container {
-    display: flex;
-    align-items: center;
+h2, h3 {
+    color: #333;
     margin-bottom: 20px;
-    background: #f4f4f4;
-    padding: 10px;
-    border-radius: 5px;
-    width: 100%;
-    box-sizing: border-box;
-    position: relative; /* Make sure it flows naturally */
-    z-index: 20; /* Ensure it's above other content but below the nav */
-    background-color: white; /* Ensure visibility */
-    border-bottom: 1px solid #ddd; /* Optional border for separation */
-    top: 20px; /* Adjust this if necessary */
 }
 
-.navbar {
-    /* Add your navbar styles here */
-    position: fixed;
-    width: 100%;
-    top: 0;
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    z-index: 20; /* Ensure the nav bar is above the row control container */
+h3 {
+    margin-top: 20px;
 }
 
-.row-control-container label {
-    margin-right: 10px;
-    font-weight: bold;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.row-count-input {
-    width: 80px;
-    margin-right: 10px;
-    padding: 5px;
+input, select, button {
+    padding: 8px;
+    margin: 10px 0;
     border-radius: 4px;
     border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.add-row-button {
+input[type="number"] {
+    width: 60px;
+}
+
+button {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px;
-    border-radius: 4px;
     cursor: pointer;
+    width: 150px;
+    margin-top: 10px;
 }
 
-.add-row-button:hover {
+button:hover {
     background-color: #45a049;
 }
 
-.admin-form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 60px; /* Space for the save button */
-    margin-top: 60px; /* Space for the nav bar */
-}
-
-.table-container {
-    flex: 1;
-    overflow-x: auto;
-    overflow-y: auto;
-    box-sizing: border-box;
-}
-
-.admin-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.admin-table th, .admin-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    box-sizing: border-box;
-    text-align: left;
-}
-
-.student-input {
-    width: 100%;
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
-.remove-row-button {
+button[type="button"] {
     background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
+    margin-left: 10px;
 }
 
-.remove-row-button:hover {
+button[type="button"]:hover {
     background-color: #e53935;
 }
 
-.save-button {
-    margin-top: 20px; /* Space from the table */
-    background-color: #2196F3;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    width: fit-content;
-    text-align: center;
-}
-
-.save-button:hover {
-    background-color: #1976D2;
-}
-
-.message, .error {
-    margin-top: 10px;
+label {
     font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
 }
+
+select {
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+select:focus, input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+}
+
+.student-row {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.student-row label {
+    width: 100%;
+}
+
+.student-row input, .student-row select {
+    width: calc(50% - 10px);
+}
+
+.student-row button[type="button"] {
+    width: auto;
+    margin-top: 0;
+    align-self: flex-end;
+}
+
+.student-row .row-left, .student-row .row-right {
+    width: 48%;
+}
+
+/* Layout for smaller screens */
+@media screen and (max-width: 768px) {
+    .student-row input, .student-row select {
+        width: 100%;
+    }
+
+    .student-row button {
+        width: 100%;
+    }
+
+    .student-row {
+        flex-direction: column;
+    }
+
+    input[type="number"] {
+        width: 100%;
+    }
+}
+

@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Results.css'; // Import the CSS file
-import Bst from './Bst';
-import Ent from './Ent';
-import Ict from './Ict';
+import { getAuth } from 'firebase/auth';
 import { useParams } from 'react-router-dom';
 
 const Results = () => {
-    const {id}=useParams();
-    const [index, setIndex] = useState(id);
+    const { id } = useParams();
+    const [index, setIndex] = useState('');
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
 
-    const id1="ent"
-    const id2="bst"
-    const id3="ict"
-  
-    
+    // Extract user index from email
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    useEffect(() => {
+        if (user) {
+            // Get the index from the email (before '@')
+            const emailParts = user.email.split('@');
+            setIndex(emailParts[0]);  // This assumes the part before @ is the index
+        }
+    }, [user]);
 
     const handleResults = async (e) => {
         e.preventDefault();
@@ -33,10 +37,6 @@ const Results = () => {
             setError(error.message);
         }
     };
- 
-     
-
-    
 
     return (
         <div className="results-container">
@@ -44,11 +44,9 @@ const Results = () => {
                 <label htmlFor="index">Index Number</label>
                 <input 
                     type="text"
-                    placeholder="index number"
-                
                     value={index}
-                    onChange={(e) => setIndex(e.target.value)}
                     id="index"
+                    readOnly // Make it read-only so the user can't edit it
                     required
                 />
                 <button type="submit">Enter</button>
@@ -73,16 +71,14 @@ const Results = () => {
                                     <td>{result.subject}</td>
                                     <td>{result.department}</td>
                                     <td>{result.marks}</td>
-                                    <td>{(result.marks)>50 ? result.status="done":"Fail"}</td>
+                                    <td>{result.marks > 50 ? 'Done' : 'Fail'}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
             )}
-            
         </div>
-
     );
 };
 

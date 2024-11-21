@@ -1,0 +1,104 @@
+
+.notes-container {
+    min-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+/* Header style */
+.notes-container h1 {
+    text-align: center;
+    color: #4a90e2;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Error message style */
+.notes-container p {
+    color: #e94e77;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Form styling */
+.notes-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.notes-form textarea {
+    width: 100%;
+    max-width: 600px;
+    height: 120px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+    font-size: 16px;
+    resize: vertical;
+}
+
+.notes-form button {
+    background-color: #4a90e2;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.notes-form button:hover {
+    background-color: #357ABD;
+}
+
+/* Notes list styling */
+.notes-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.notes-list li {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+}
+
+.notes-list li:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.notes-list li p {
+    margin: 0 0 10px;
+    font-size: 16px;
+}
+
+.notes-list li button {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    background-color: #e94e77;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.notes-list li button:hover {
+    background-color: #d43f5e;
+}

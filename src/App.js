@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
+
 import NavBar from './NavBar';
 import Navbar2 from './Navbar2';
 import Home from './Home';
 import About from './About';
 import Portfolio from './Portfolio';
 import Blog from './Blog';
+// import Chat from './Chat';
+import Chat from './Chat';
 import Contact from './Contact';
 import { signOut } from 'firebase/auth';
 import Login from './Login';
@@ -26,16 +29,28 @@ import { useNavigate } from 'react-router-dom';
 
 
 
+//admin
+
+import AdminDashboard from './Admin/AdminDashboard';
+import UpdateResults from './Admin/UpdateResults';
+import AddAdmin from './Admin/AddAdmin';
+import ManageSubjects from './Admin/ManageSubjects';
+
 
 import Pastpapers from './Pastpapers';
 import Marks from './Marks';
 import Resources from './Resources';
 import Logoutbutton from './LogoutButton';
 // import Admin from './components/Admin';
-
+import PastPapers1 from './component2/Pastpapers1';
+import Layout from './component2/Layout';
+import ResourceCard from './component2/ResouceCard';  
+import UploadMaterial from './component2/UploadMaterial';
 
 // Your web app's Firebase configuration
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import Unauthorized from './Admin/Unauthorized';
+import UploadFile from './UploadFile';
 
 function App() {
   let id1="ent"
@@ -101,7 +116,9 @@ const[id2,setId2]=useState(["ent","bst","ict"])
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/blog" element={<Chat />} />  
           {/* <Route path="/login" element={<Login />} /> */}
+    
           {/* Example of a private route */}
           
           
@@ -110,13 +127,24 @@ const[id2,setId2]=useState(["ent","bst","ict"])
         <Route path="/create-account" element={<Create />} />
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home/>} />
-        <Route path='/admin'element={<Admin/>} />
-        <Route path="/about" element={<About />} />
+        {/* <Route path='/admin'element={<Admin/>} /> */}
+        {/* <Route path="/about" element={<About />} /> */}
 
         <Route path="/pastpapers" element={<Pastpapers/>} />
         
         <Route path="/resources" element={<Notes/>} />
         <Route path="/logout" element={<LogoutButton/>} />
+        <Route path="/unauthorized" element={<Unauthorized/>} />
+
+
+
+        <Route path="/admin">
+  <Route index element={<AdminDashboard />} />
+  <Route path="updateresult" element={<Admin />} />
+  <Route path="addadmin" element={<AddAdmin />} />
+  <Route path="managesubject" element={<ManageSubjects />} />
+  <Route path="upload" element={<UploadFile />} />
+</Route>
 
 
         {/* from marks to choose dep */}
@@ -129,8 +157,17 @@ const[id2,setId2]=useState(["ent","bst","ict"])
         
 
        
+    
+  <Route path="/" element={<Layout />}>
+    <Route path="pastpapers" element={<PastPapers1 />} />
+    {/* <Route path="study-materials" element={<StudyMaterials />} /> */}
+    <Route path="project-samples" element={<ResourceCard />} />
+    <Route path="current-materials" element={<UploadMaterial />} />
+    <Route path="upload" element={<UploadMaterial />} />
+    {/* <Route path="*" element={<NotFound />} /> */}
+  </Route>
 
-        
+
 
 
          

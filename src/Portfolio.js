@@ -1,13 +1,16 @@
-// src/Portfolio.js
+// App.js
 import React from 'react';
+import UploadFile from './UploadFile';
+import PreviewFiles from './PreviewFiles';
 
-function Portfolio() {
+const Portfolio = () => {
   return (
-    <div>
-      <h2>My Portfolio</h2>
-      <p>This is the portfolio section.</p>
+    <div className="App">
+      <h1>Past Paper preview</h1>
+      {/* <UploadFile /> */}
+      <PreviewFiles />
     </div>
   );
-}
+};
 
 export default Portfolio;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { auth } from './firebase';
-import './notes.css'
+import './Notes.css'
 
 const Notes = () => {
     const [notes, setNotes] = useState([]);
@@ -44,30 +44,33 @@ const Notes = () => {
     const handleDeleteNote = async (id) => {
         try {
             await axios.delete(`http://localhost:5000/notes/${id}`);
-            setNotes(notes.filter(note => note.id !== id));
+            setNotes(notes.filter(note => note._id !== id));
         } catch (error) {
             setError(error.message);
         }
     };
 
     return (
-        <div>
-            <h1>Your Notes</h1>
-            {error && <p>{error}</p>}
-            <form onSubmit={handleAddNote}>
-                <textarea
-                    value={newNote}
-                    onChange={(e) => setNewNote(e.target.value)}
-                    placeholder="Write your note here..."
-                />
-                <button type="submit">Add Note</button>
-            </form>
-            <ul>
+        <div className="notes-container">
+            <div className="notes-form">
+                <h1>Your Notes</h1>
+                {error && <p>{error}</p>}
+                <form onSubmit={handleAddNote}>
+                    <textarea
+                        className="notes-textarea"
+                        value={newNote}
+                        onChange={(e) => setNewNote(e.target.value)}
+                        placeholder="Write your note here..."
+                    />
+                    <button className="notes-button" type="submit">Add Note</button>
+                </form>
+            </div>
+            <ul className="notes-list">
                 {notes.map(note => (
-                    <li key={note._id}>
+                    <li className="notes-item" key={note._id}>
                         <p>Content: {note.content}</p>
                         <p>Created At: {new Date(note.createdAt).toLocaleString()}</p>
-                        <button onClick={() => handleDeleteNote(note._id)}>Delete</button>
+                        <button className="notes-delete-button" onClick={() => handleDeleteNote(note._id)}>Delete</button>
                     </li>
                 ))}
             </ul>
